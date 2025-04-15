@@ -1,0 +1,16 @@
+{
+  "navigation": {
+    "home": "Home",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "home": {
+    "title": "Welcome to Next.js Blog",
+    "description": "A modern blog built with Next.js, TypeScript, and Tailwind CSS."
+  }
+}
