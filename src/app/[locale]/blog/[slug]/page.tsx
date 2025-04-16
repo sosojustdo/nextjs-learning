@@ -1,15 +1,19 @@
 // 这个文件处理 /blog/[slug] 路由
 // 例如：/blog/first-post, /blog/how-to-learn-nextjs 等
 
-// 定义页面组件的参数类型
+import { unstable_setRequestLocale } from 'next-intl/server'
+import { ValidLocale } from '@/i18n/config'
+
 type Props = {
   params: {
-    slug: string  // 这里的 slug 对应文件夹名 [slug]
+    locale: ValidLocale
+    slug: string
   }
 }
 
 // 页面组件
-export default function BlogPost({ params }: Props) {
+export default async function BlogPost({ params }: Props) {
+  unstable_setRequestLocale(params.locale)
   // params.slug 将包含 URL 中的实际值
   // 例如：访问 /blog/first-post 时，params.slug 将是 "first-post"
 
