@@ -1,12 +1,17 @@
 import { getRequestConfig } from 'next-intl/server'
-import { locales } from './config'
+import { locales, defaultLocale } from './config'
 
-export default getRequestConfig(async ({ locale }) => {
-  if (!locales.includes(locale as any)) {
-    throw new Error(`Locale '${locale}' is not supported`)
+export default getRequestConfig(async ({ requestLocale }) => {
+  // This typically corresponds to the `[locale]` segment
+  let locale = await requestLocale;
+
+  // Ensure that the incoming locale is valid
+  if (!locale || !locales.includes(locale as any)) {
+    locale = defaultLocale;
   }
 
   return {
-    messages: (await import(`./messages/${locale}.json`)).default
+    messages: (await import(`./messages/${locale}.json`)).default,
+    locale: locale as string // Make sure to return the locale as string
   }
 })

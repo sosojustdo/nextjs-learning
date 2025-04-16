@@ -2,7 +2,7 @@
 // 例如：/blog/first-post, /blog/how-to-learn-nextjs 等
 
 import { unstable_setRequestLocale } from 'next-intl/server'
-import { ValidLocale } from '@/i18n/config'
+import { ValidLocale, locales } from '@/i18n/config'
 
 type SegmentParams = {
   locale: ValidLocale
@@ -12,6 +12,22 @@ type SegmentParams = {
 type PageProps = {
   params: Promise<SegmentParams>
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+// 定义静态生成的路径参数
+export async function generateStaticParams() {
+  // 这里应该从你的数据源获取所有博客文章的slugs
+  // 例如从CMS、Markdown文件等
+  const slugs = ['first-post', 'how-to-learn-nextjs', 'welcome']
+
+  const params = []
+  for (const locale of locales) {
+    for (const slug of slugs) {
+      params.push({ locale, slug })
+    }
+  }
+
+  return params
 }
 
 // 页面组件
